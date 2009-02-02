@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="NCL Examples"
+            id="ncl30_eclipse_club">
+      </category>
+      <wizard
+            name="NCL Example from Club NCL"
+            icon="icons/sample.gif"
+            category="ncl30_eclipse_club"
+            class="br.ufma.deinf.laws.ncleclipse.club.wizards.NCLClubNewWizard"
+            id="ncl30_eclipse_club.wizards.SampleNewWizard">
+      </wizard>
+   </extension>
+
+</plugin>

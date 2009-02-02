@@ -71,6 +71,7 @@ public class NCLClubListExamplesPage extends WizardPage {
 	/**
 	 * @see IDialogPage#createControl(Composite)
 	 */
+	//TODO: Aumentar tamanho da janela do wizard
 	public void createControl(Composite parent) {
 		Composite container = new Composite(parent, SWT.NULL);
 		GridLayout layout = new GridLayout();
