@@ -39,6 +39,7 @@ public class NCLClubListExamplesPage extends WizardPage {
 	private ISelection selection;
 	private RSSReader rssReader;
 	private Vector<RSSItem> items;
+	private RSSItem selectedItem;
 
 	/**
 	 * Constructor for SampleNewWizardPage.
@@ -50,6 +51,14 @@ public class NCLClubListExamplesPage extends WizardPage {
 		setTitle("NCL Eclipse - NCL Examples from NCL Club");
 		setDescription("This wizard creates a new file with *.ncl extension based on examples avalaible at http://clube.ncl.org.br.");
 		this.selection = selection;
+	}
+
+	public RSSItem getSelectedItem() {
+		return selectedItem;
+	}
+
+	public void setSelectedItem(RSSItem selectedItem) {
+		this.selectedItem = selectedItem;
 	}
 
 	public ISelection getSelection() {
@@ -71,8 +80,9 @@ public class NCLClubListExamplesPage extends WizardPage {
 	/**
 	 * @see IDialogPage#createControl(Composite)
 	 */
-	//TODO: Aumentar tamanho da janela do wizard
+	
 	public void createControl(Composite parent) {
+		parent.setBounds(0, 0, 800, 500); //resize the window
 		Composite container = new Composite(parent, SWT.NULL);
 		GridLayout layout = new GridLayout();
 		container.setLayout(layout);
@@ -88,6 +98,7 @@ public class NCLClubListExamplesPage extends WizardPage {
 		
 		selectedDescription = new Browser(container, SWT.NONE | SWT.BORDER);
 		selectedDescription.setLayoutData(data);
+		selectedDescription.setBounds(0, 0, 500, 500);
 
 		// get RSS from Web
 		URL url;
@@ -108,16 +119,18 @@ public class NCLClubListExamplesPage extends WizardPage {
 
 			listExamples.addSelectionListener(new SelectionListener() {
 				public void widgetSelected(SelectionEvent event) {
-					int selectedItem = listExamples.getSelectionIndex();
-					if (selectedItem == -1)
+					int sel = listExamples.getSelectionIndex();
+					if (sel == -1)
 						return;
 					String descr = "";
 					descr = "<img src='" + 
-									items.get(selectedItem).getImageUrl().toString()+"'/>";
+									items.get(sel).getImageUrl().toString()+"'/>";
 					
-					descr += items.get(selectedItem).getDescription();
+					descr += items.get(sel).getDescription();
 								
 					selectedDescription.setText(descr);
+					
+					selectedItem = items.get(sel);
 				}
 
 				public void widgetDefaultSelected(SelectionEvent event) {

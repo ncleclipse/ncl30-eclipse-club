@@ -40,8 +40,8 @@ public class NCLClubNewWizardPage extends WizardPage {
 	 */
 	public NCLClubNewWizardPage(ISelection selection) {
 		super("wizardPage");
-		setTitle("Multi-page Editor File");
-		setDescription("This wizard creates a new file with *.mpe extension that can be opened by a multi-page editor.");
+		setTitle("NCL Eclipse - NCL Examples from NCL Club");
+		setDescription("This wizard creates a new project based on previous NCL application selected.");
 		this.selection = selection;
 	}
 
@@ -66,6 +66,7 @@ public class NCLClubNewWizardPage extends WizardPage {
 			}
 		});
 
+		/** 
 		Button button = new Button(container, SWT.PUSH);
 		button.setText("Browse...");
 		button.addSelectionListener(new SelectionAdapter() {
@@ -73,17 +74,7 @@ public class NCLClubNewWizardPage extends WizardPage {
 				handleBrowse();
 			}
 		});
-		label = new Label(container, SWT.NULL);
-		label.setText("&File name:");
-
-		fileText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		gd = new GridData(GridData.FILL_HORIZONTAL);
-		fileText.setLayoutData(gd);
-		fileText.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-				dialogChanged();
-			}
-		});
+		*/
 		initialize();
 		dialogChanged();
 		setControl(container);
@@ -94,22 +85,8 @@ public class NCLClubNewWizardPage extends WizardPage {
 	 */
 
 	private void initialize() {
-		if (selection != null && selection.isEmpty() == false
-				&& selection instanceof IStructuredSelection) {
-			IStructuredSelection ssel = (IStructuredSelection) selection;
-			if (ssel.size() > 1)
-				return;
-			Object obj = ssel.getFirstElement();
-			if (obj instanceof IResource) {
-				IContainer container;
-				if (obj instanceof IContainer)
-					container = (IContainer) obj;
-				else
-					container = ((IResource) obj).getParent();
-				containerText.setText(container.getFullPath().toString());
-			}
-		}
-		fileText.setText("new_file.mpe");
+		containerText.setText("New NCL project");
+		//fileText.setText("new_file.mpe");
 	}
 
 	/**
@@ -135,37 +112,17 @@ public class NCLClubNewWizardPage extends WizardPage {
 
 	private void dialogChanged() {
 		IResource container = ResourcesPlugin.getWorkspace().getRoot()
-				.findMember(new Path(getContainerName()));
-		String fileName = getFileName();
-
+				.findMember(new Path("/"+getContainerName()));
+		System.out.println(getContainerName() + container);
+		
 		if (getContainerName().length() == 0) {
 			updateStatus("File container must be specified");
 			return;
 		}
-		if (container == null
-				|| (container.getType() & (IResource.PROJECT | IResource.FOLDER)) == 0) {
-			updateStatus("File container must exist");
+		
+		if (container != null) {
+			updateStatus("File container exist. Please, change the container name");
 			return;
-		}
-		if (!container.isAccessible()) {
-			updateStatus("Project must be writable");
-			return;
-		}
-		if (fileName.length() == 0) {
-			updateStatus("File name must be specified");
-			return;
-		}
-		if (fileName.replace('\\', '/').indexOf('/', 1) > 0) {
-			updateStatus("File name must be valid");
-			return;
-		}
-		int dotLoc = fileName.lastIndexOf('.');
-		if (dotLoc != -1) {
-			String ext = fileName.substring(dotLoc + 1);
-			if (ext.equalsIgnoreCase("mpe") == false) {
-				updateStatus("File extension must be \"mpe\"");
-				return;
-			}
 		}
 		updateStatus(null);
 	}
@@ -180,6 +137,7 @@ public class NCLClubNewWizardPage extends WizardPage {
 	}
 
 	public String getFileName() {
-		return fileText.getText();
+		//fileText.getText()
+		return "test";
 	}
 }
