@@ -14,3 +14,4 @@ Bundle-ClassPath: bin/,
  lib/xercesImpl.jar,
  lib/xml-apis.jar
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: Laws and Telemidia Labs
