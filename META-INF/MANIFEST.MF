@@ -1,13 +1,14 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: NCL Eclipse from Club NCL
-Bundle-SymbolicName: ncl30_eclipse_club; singleton:=true
+Bundle-SymbolicName: br.ufma.deinf.laws.ncleclipse.club;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: br.ufma.deinf.laws.ncleclipse.club.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.ui.ide,
- org.eclipse.core.resources
+ org.eclipse.core.resources,
+ org.apache.xerces;bundle-version="2.9.0"
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: bin/,
  icons/,
