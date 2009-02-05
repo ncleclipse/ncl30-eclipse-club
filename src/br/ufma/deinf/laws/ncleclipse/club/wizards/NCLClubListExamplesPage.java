@@ -83,7 +83,6 @@ public class NCLClubListExamplesPage extends WizardPage {
 	
 	public void createControl(Composite parent) {
 		parent.setBounds(0, 0, 800, 500); //resize the window
-		
 		Composite container = new Composite(parent, SWT.NULL);
 		GridLayout layout = new GridLayout();
 		container.setLayout(layout);
@@ -144,14 +143,17 @@ public class NCLClubListExamplesPage extends WizardPage {
 			});
 
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
+			selectedDescription
+				.setText("NCL Club can't be contacted. Please, check your internet connection. If you are sure that your connection is Ok send an e-mail to ncleclipse@laws.deinf.ufma.br");
 			e.printStackTrace();
-		} // TODO: transform in dynamic
+		}
 		catch (SAXException e) {
-			// TODO Auto-generated catch block
+			selectedDescription
+				.setText("NCL Club can't be contacted. Please, check your internet connection. If you are sure that your connection is Ok send an e-mail to ncleclipse@laws.deinf.ufma.br");
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			selectedDescription
+			.setText("NCL Club can't be contacted. Please, check your internet connection. If you are sure that your connection is Ok send an e-mail to ncleclipse@laws.deinf.ufma.br");
 			e.printStackTrace();
 		}
 
