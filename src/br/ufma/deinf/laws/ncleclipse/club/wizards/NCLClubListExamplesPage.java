@@ -83,6 +83,7 @@ public class NCLClubListExamplesPage extends WizardPage {
 	
 	public void createControl(Composite parent) {
 		parent.setBounds(0, 0, 800, 500); //resize the window
+		
 		Composite container = new Composite(parent, SWT.NULL);
 		GridLayout layout = new GridLayout();
 		container.setLayout(layout);
@@ -154,6 +155,7 @@ public class NCLClubListExamplesPage extends WizardPage {
 			e.printStackTrace();
 		}
 
+		container.setBounds(0, 0, 1200, 800);
 		initialize();
 		dialogChanged();
 		setControl(container);
