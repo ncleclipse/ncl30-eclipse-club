@@ -1,20 +1,38 @@
+/*******************************************************************************
+ * This file is part of the authoring environment in Nested Context Language -
+ * NCL Eclipse.
+ * 
+ * Copyright: 2007-2009 UFMA/LAWS (Laboratory of Advanced Web Systems), All Rights Reserved.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under 
+ * the terms of the GNU General Public License version 2 as published by
+ * the Free Software Foundation.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ * PARTICULAR PURPOSE.  See the GNU General Public License version 2 for more 
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License version 2
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+ * For further information contact:
+ * 		ncleclipse@laws.deinf.ufma.br
+ * 		http://www.laws.deinf.ufma.br/ncleclipse
+ * 		http://www.laws.deinf.ufma.br
+ ********************************************************************************/
 package br.ufma.deinf.laws.ncleclipse.club.wizards;
 
-import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.dialogs.IDialogPage;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -66,15 +84,12 @@ public class NCLClubNewWizardPage extends WizardPage {
 			}
 		});
 
-		/** 
-		Button button = new Button(container, SWT.PUSH);
-		button.setText("Browse...");
-		button.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				handleBrowse();
-			}
-		});
-		*/
+		/**
+		 * Button button = new Button(container, SWT.PUSH);
+		 * button.setText("Browse..."); button.addSelectionListener(new
+		 * SelectionAdapter() { public void widgetSelected(SelectionEvent e) {
+		 * handleBrowse(); } });
+		 */
 		initialize();
 		dialogChanged();
 		setControl(container);
@@ -86,7 +101,7 @@ public class NCLClubNewWizardPage extends WizardPage {
 
 	private void initialize() {
 		containerText.setText("New NCL project");
-		//fileText.setText("new_file.mpe");
+		// fileText.setText("new_file.mpe");
 	}
 
 	/**
@@ -112,14 +127,14 @@ public class NCLClubNewWizardPage extends WizardPage {
 
 	private void dialogChanged() {
 		IResource container = ResourcesPlugin.getWorkspace().getRoot()
-				.findMember(new Path("/"+getContainerName()));
+				.findMember(new Path("/" + getContainerName()));
 		System.out.println(getContainerName() + container);
-		
+
 		if (getContainerName().length() == 0) {
 			updateStatus("File container must be specified");
 			return;
 		}
-		
+
 		if (container != null) {
 			updateStatus("File container exist. Please, change the container name");
 			return;
@@ -137,7 +152,7 @@ public class NCLClubNewWizardPage extends WizardPage {
 	}
 
 	public String getFileName() {
-		//fileText.getText()
+		// fileText.getText()
 		return "test";
 	}
 }

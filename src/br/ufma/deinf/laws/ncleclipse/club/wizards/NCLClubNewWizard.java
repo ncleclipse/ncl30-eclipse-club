@@ -1,3 +1,25 @@
+/*******************************************************************************
+ * This file is part of the authoring environment in Nested Context Language -
+ * NCL Eclipse.
+ * 
+ * Copyright: 2007-2009 UFMA/LAWS (Laboratory of Advanced Web Systems), All Rights Reserved.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under 
+ * the terms of the GNU General Public License version 2 as published by
+ * the Free Software Foundation.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY 
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ * PARTICULAR PURPOSE.  See the GNU General Public License version 2 for more 
+ * details.
+ * 
+ * You should have received a copy of the GNU General Public License version 2
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+ * For further information contact:
+ * 		ncleclipse@laws.deinf.ufma.br
+ * 		http://www.laws.deinf.ufma.br/ncleclipse
+ * 		http://www.laws.deinf.ufma.br
+ ********************************************************************************/
 package br.ufma.deinf.laws.ncleclipse.club.wizards;
 
 import java.io.BufferedOutputStream;
@@ -38,7 +60,6 @@ import org.eclipse.ui.IWorkbenchWizard;
  * sample multi-page editor (also available as a template) is registered for the
  * same extension, it will be able to open it.
  */
-
 public class NCLClubNewWizard extends Wizard implements INewWizard {
 	private NCLClubListExamplesPage pageList;
 	private NCLClubNewWizardPage page;
@@ -102,8 +123,8 @@ public class NCLClubNewWizard extends Wizard implements INewWizard {
 	 * file.
 	 */
 
-	private void doFinish(String containerName,
-			IProgressMonitor monitor) throws CoreException {
+	private void doFinish(String containerName, IProgressMonitor monitor)
+			throws CoreException {
 		// create a sample file
 		monitor.beginTask("Creating project " + containerName, 2);
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
@@ -112,7 +133,8 @@ public class NCLClubNewWizard extends Wizard implements INewWizard {
 		// create the project and open it
 		if (!project.exists()) {
 			project.create(monitor);
-			if(!project.isOpen()) project.open(monitor);
+			if (!project.isOpen())
+				project.open(monitor);
 		}
 		/*
 		 * try { InputStream stream = openContentStream(); if (file.exists()) {
@@ -122,12 +144,13 @@ public class NCLClubNewWizard extends Wizard implements INewWizard {
 		 */
 		monitor.worked(1);
 		try {
-			createResourcesFromUrl(pageList.getSelectedItem().getResourcesZipUrl(), monitor);
+			createResourcesFromUrl(pageList.getSelectedItem()
+					.getResourcesZipUrl(), monitor);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		 root.refreshLocal(IResource.DEPTH_INFINITE, monitor);
+		root.refreshLocal(IResource.DEPTH_INFINITE, monitor);
 		/*
 		 * getShell().getDisplay().asyncExec(new Runnable() { public void run()
 		 * { IWorkbenchPage page =
@@ -141,10 +164,11 @@ public class NCLClubNewWizard extends Wizard implements INewWizard {
 	/**
 	 * 
 	 * @param url
-	 * @throws IOException 
-	 * @throws CoreException 
+	 * @throws IOException
+	 * @throws CoreException
 	 */
-	private void createResourcesFromUrl(URL url, IProgressMonitor monitor) throws IOException, CoreException {
+	private void createResourcesFromUrl(URL url, IProgressMonitor monitor)
+			throws IOException, CoreException {
 		monitor.setTaskName("Getting zip file...");
 		InputStream is = url.openStream();
 		monitor.worked(1);
@@ -154,41 +178,48 @@ public class NCLClubNewWizard extends Wizard implements INewWizard {
 	/**
 	 * 
 	 * @param in
-	 * @throws IOException 
-	 * @throws FileNotFoundException 
-	 * @throws CoreException 
+	 * @throws IOException
+	 * @throws FileNotFoundException
+	 * @throws CoreException
 	 */
-	private void createResourcesFromZip(InputStream in, IProgressMonitor monitor) throws FileNotFoundException, IOException, CoreException {
+	private void createResourcesFromZip(InputStream in, IProgressMonitor monitor)
+			throws FileNotFoundException, IOException, CoreException {
 		ZipInputStream zis = new ZipInputStream(in);
 		ZipEntry entry;
-		while((entry = zis.getNextEntry()) != null){
+		while ((entry = zis.getNextEntry()) != null) {
 			monitor.setTaskName("Unzipping: " + entry.getName());
-			
+
 			int size;
 			byte[] buffer = new byte[2048];
 
 			monitor.worked(1);
 			IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 			IProject project = root.getProject(containerName);
-			
-			System.out.println(project.getFullPath().toOSString() + "/" +entry.getName());
-			IPath workspacePath = ResourcesPlugin.getWorkspace().getRoot().getLocation();
-			
-			if(entry.isDirectory()){
+
+			System.out.println(project.getFullPath().toOSString() + "/"
+					+ entry.getName());
+			IPath workspacePath = ResourcesPlugin.getWorkspace().getRoot()
+					.getLocation();
+
+			if (entry.isDirectory()) {
 				IFolder folder = project.getFolder(entry.getName());
-				if(!folder.exists()) folder.create(IResource.NONE, true, null);
+				if (!folder.exists())
+					folder.create(IResource.NONE, true, null);
 				continue;
 			}
 
 			System.out.println(workspacePath.toOSString());
-			
-			FileOutputStream fos = new FileOutputStream(workspacePath.toOSString()+"/"+project.getFullPath()+"/" + entry.getName());
-			BufferedOutputStream bos = new BufferedOutputStream(fos, buffer.length);
+
+			FileOutputStream fos = new FileOutputStream(workspacePath
+					.toOSString()
+					+ "/" + project.getFullPath() + "/" + entry.getName());
+			BufferedOutputStream bos = new BufferedOutputStream(fos,
+					buffer.length);
 			while ((size = zis.read(buffer, 0, buffer.length)) != -1) {
-				  bos.write(buffer, 0, size);
+				bos.write(buffer, 0, size);
 			}
 			bos.flush();
-			bos.close(); 
+			bos.close();
 		}
 		zis.close();
 	}
