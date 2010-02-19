@@ -1,5 +1,12 @@
 TODO:
 
 
-
 NEWS:
+Version 1.1.0
+	- Internationalization
+		Messages in English, Spanish and Portuguese!
+		
+		The rss is loaded based on the language
+			- http://club.ncl.org.br/rss.xml or
+			- http://clube.ncl.org.br/rss.xml or
+			- http://elclub.ncl.org.br 

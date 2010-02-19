@@ -22,6 +22,7 @@
  ********************************************************************************/
 package br.ufma.deinf.laws.ncleclipse.club.wizards;
 
+import br.ufma.deinf.laws.ncleclipse.club.ClubNCLMessages;
 import br.ufma.deinf.laws.ncleclipse.club.rss.*;
 
 import java.io.IOException;
@@ -70,8 +71,9 @@ public class NCLClubListExamplesPage extends WizardPage {
 	 */
 	public NCLClubListExamplesPage(ISelection selection) {
 		super("wizardPage");
-		setTitle("NCL Eclipse - NCL Examples from NCL Club");
-		setDescription("This wizard creates a new file with *.ncl extension based on examples avalaible at http://clube.ncl.org.br.");
+		setTitle(ClubNCLMessages.getInstance().getString("WizardPage.title"));
+		setDescription(ClubNCLMessages.getInstance().getString(
+				"WizardPage.description"));
 		this.selection = selection;
 	}
 
@@ -102,9 +104,9 @@ public class NCLClubListExamplesPage extends WizardPage {
 	/**
 	 * @see IDialogPage#createControl(Composite)
 	 */
-	
+
 	public void createControl(Composite parent) {
-		parent.setBounds(0, 0, 800, 500); //resize the window
+		parent.setBounds(0, 0, 800, 500); // resize the window
 		Composite container = new Composite(parent, SWT.NULL);
 		GridLayout layout = new GridLayout();
 		container.setLayout(layout);
@@ -113,11 +115,12 @@ public class NCLClubListExamplesPage extends WizardPage {
 
 		GridData data = new GridData(GridData.FILL_BOTH);
 
-		listExamples = new List(container, SWT.H_SCROLL | SWT.BORDER);
+		listExamples = new List(container, SWT.V_SCROLL | SWT.H_SCROLL
+				| SWT.BORDER);
 		listExamples.setLayoutData(data);
 
 		data = new GridData(GridData.FILL_BOTH);
-		
+
 		selectedDescription = new Browser(container, SWT.NONE | SWT.BORDER);
 		selectedDescription.setLayoutData(data);
 		selectedDescription.setBounds(0, 0, 500, 500);
@@ -125,7 +128,8 @@ public class NCLClubListExamplesPage extends WizardPage {
 		// get RSS from Web
 		URL url;
 		try {
-			url = new URL("http://club.ncl.org.br/?q=rss.xml");
+			url = new URL(ClubNCLMessages.getInstance().getString(
+					"RSS_LOCATION"));
 			rssReader = new RSSReader(url);
 			rssReader.parse();
 			items = rssReader.getRssRoot().getAllItems();
@@ -135,8 +139,8 @@ public class NCLClubListExamplesPage extends WizardPage {
 				listExamples.add(items.get(i).getTitle());
 			}
 
-			selectedDescription
-					.setText("Select an example to view its description.");
+			selectedDescription.setText(ClubNCLMessages.getInstance()
+					.getString("SelectedDescription.empty"));
 			selectedDescription.setSize(200, 200);
 
 			listExamples.addSelectionListener(new SelectionListener() {
@@ -145,13 +149,13 @@ public class NCLClubListExamplesPage extends WizardPage {
 					if (sel == -1)
 						return;
 					String descr = "";
-					descr = "<img src='" + 
-									items.get(sel).getImageUrl().toString()+"'/>";
-					
+					descr = "<img src='"
+							+ items.get(sel).getImageUrl().toString() + "'/>";
+
 					descr += items.get(sel).getDescription();
-								
+
 					selectedDescription.setText(descr);
-					
+
 					selectedItem = items.get(sel);
 				}
 
@@ -166,16 +170,15 @@ public class NCLClubListExamplesPage extends WizardPage {
 
 		} catch (MalformedURLException e) {
 			selectedDescription
-				.setText("NCL Club can't be contacted. Please, check your internet connection. If you are sure that your connection is Ok send an e-mail to ncleclipse@laws.deinf.ufma.br");
+					.setText(ClubNCLMessages.getInstance().getString("SelectedDescription.ConnectionError"));
 			e.printStackTrace();
-		}
-		catch (SAXException e) {
+		} catch (SAXException e) {
 			selectedDescription
-				.setText("NCL Club can't be contacted. Please, check your internet connection. If you are sure that your connection is Ok send an e-mail to ncleclipse@laws.deinf.ufma.br");
+					.setText(ClubNCLMessages.getInstance().getString("SelectedDescription.ConnectionError"));
 			e.printStackTrace();
 		} catch (IOException e) {
 			selectedDescription
-			.setText("NCL Club can't be contacted. Please, check your internet connection. If you are sure that your connection is Ok send an e-mail to ncleclipse@laws.deinf.ufma.br");
+					.setText("NCL Club can't be contacted. Please, check your internet connection. If you are sure that your connection is Ok send an e-mail to ncleclipse@laws.deinf.ufma.br");
 			e.printStackTrace();
 		}
 
@@ -228,7 +231,7 @@ public class NCLClubListExamplesPage extends WizardPage {
 	 */
 
 	private void dialogChanged() {
-		
+
 	}
 
 	private void updateStatus(String message) {
