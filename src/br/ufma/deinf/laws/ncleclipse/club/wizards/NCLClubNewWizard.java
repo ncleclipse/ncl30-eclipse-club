@@ -52,6 +52,8 @@ import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWizard;
 
+import br.ufma.deinf.laws.ncleclipse.club.ClubNCLMessages;
+
 /**
  * This is a sample new wizard. Its role is to create a new file resource in the
  * provided container. If the container resource (a folder or a project) is
@@ -110,8 +112,15 @@ public class NCLClubNewWizard extends Wizard implements INewWizard {
 			return false;
 		} catch (InvocationTargetException e) {
 			Throwable realException = e.getTargetException();
-			MessageDialog.openError(getShell(), "Error", realException
-					.getMessage());
+			// Error opening the resource
+			Object[] params = { pageList.getSelectedItem().getResourcesZipUrl() };
+
+			String titleError = ClubNCLMessages.getInstance().getString(
+					"ContentAssist.Error.Title");
+			String messageError = ClubNCLMessages.getInstance().getString(
+					"WizardPage.ResourceNotFound", params);
+
+			MessageDialog.openError(getShell(), titleError, messageError);
 			return false;
 		}
 		return true;
@@ -147,9 +156,9 @@ public class NCLClubNewWizard extends Wizard implements INewWizard {
 			createResourcesFromUrl(pageList.getSelectedItem()
 					.getResourcesZipUrl(), monitor);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		root.refreshLocal(IResource.DEPTH_INFINITE, monitor);
 		/*
 		 * getShell().getDisplay().asyncExec(new Runnable() { public void run()
