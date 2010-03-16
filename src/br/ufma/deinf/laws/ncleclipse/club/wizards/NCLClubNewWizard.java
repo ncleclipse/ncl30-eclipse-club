@@ -205,8 +205,8 @@ public class NCLClubNewWizard extends Wizard implements INewWizard {
 			IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 			IProject project = root.getProject(containerName);
 
-			System.out.println(project.getFullPath().toOSString() + "/"
-					+ entry.getName());
+			/* System.out.println(project.getFullPath().toOSString() + "/"
+					+ entry.getName()); */
 			IPath workspacePath = ResourcesPlugin.getWorkspace().getRoot()
 					.getLocation();
 
@@ -217,7 +217,7 @@ public class NCLClubNewWizard extends Wizard implements INewWizard {
 				continue;
 			}
 
-			System.out.println(workspacePath.toOSString());
+			//System.out.println(workspacePath.toOSString());
 
 			FileOutputStream fos = new FileOutputStream(workspacePath
 					.toOSString()

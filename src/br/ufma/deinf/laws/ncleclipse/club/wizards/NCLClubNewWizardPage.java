@@ -128,7 +128,7 @@ public class NCLClubNewWizardPage extends WizardPage {
 	private void dialogChanged() {
 		IResource container = ResourcesPlugin.getWorkspace().getRoot()
 				.findMember(new Path("/" + getContainerName()));
-		System.out.println(getContainerName() + container);
+		//System.out.println(getContainerName() + container);
 
 		if (getContainerName().length() == 0) {
 			updateStatus("File container must be specified");
