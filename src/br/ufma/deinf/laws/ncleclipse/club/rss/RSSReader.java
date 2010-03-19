@@ -46,7 +46,7 @@ public class RSSReader {
 	protected DOMParser parser;
 	protected Document doc;
 
-	private boolean log = true;
+	private boolean log = false;
 	
 	public RSSReader() {
 
